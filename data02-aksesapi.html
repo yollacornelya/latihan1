@@ -29,7 +29,7 @@
             //ajax
             $.ajax({
                dataType: "json",
-               url: "https://api.kawalcorona.com/indonesia", 
+               url: "http://jendela.data.kemdikbud.go.id/api/index.php/CcariMuseum/searchGET?nama=museum", 
                beforeSend: function(){ //proses sebelum ajax berjalan
                   $("#load").show();
                },
@@ -39,11 +39,11 @@
                   
                   //masukkan kedalam table
                   var isiTable = "<tr><td>Nama</td><td>"+ meal[0].strMeal +"</td></tr>";
-                     isiTable += "<tr><td>Gambar</td><td><img src='"+ meal[0].strMealThumb +"' loading='lazy' height='200px'></td></tr>";
+                     isiTable += "<tr><td>Gambar</td><td><img src='"+ meal[0].strMealThumb +"' loading='lazy' height='200px'></td></tr>";*/
                      
                   $("table").append(isiTable);
 
-                  $("#load").hide();*/
+                  $("#load").hide();
                }
             });
          });

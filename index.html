@@ -9,8 +9,18 @@
    <script src="https://code.jquery.com/jquery-3.5.1.min.js" 
    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" 
    crossorigin="anonymous"></script>
-
-   <script>      
+   <style type = "text/css"> 
+       input, button{
+       	  padding:10px;
+       	  margin:5px;
+        }
+       table,th,td {
+       	border-collapse: collapse;
+       	border: 1px solid black;
+       	padding :5px;
+        } 
+   </style>
+   <!--<script>      
       $().ready(function(){
          //alert("hai");
          
@@ -32,12 +42,83 @@
             });
          });
       });
-      </script>
+      </script>-->
 </head>
 <body>
-   <button>Klik Aku</button>
-   <p id="tombol">Klik aku</p>
-   <p id="teksku">Ayo klik kalimat diatas, maka aku akan menghilang</p>
-   <h1>Klik aku dong</h1>
+   <h1>Akses API dengan Ajax - Data Wilayah Indonesia</h1>
+   <button id="tombol">Wilayah</button><img id="load" src="load.gif">
+    <button id="tombol1">Indonesia</button>
+   <table></table>
+   <script>      
+      $().ready(function(){
+         $("#load").hide();
+
+         $("#tombol").click(function(){
+            //ajax
+            $.ajax({
+               dataType: "json",
+               url: "http://jendela.data.kemdikbud.go.id/api/index.php/CcariMuseum/searchGET?nama=museum", 
+               beforeSend: function(){ //proses sebelum ajax berjalan
+                  $("#tombol").hide();
+                  $("#load").show();
+                   },
+               success: function(result){ //berhasil
+                  console.log(result);
+
+                  $("table > tr").remove("") //bersihkan tabel, agar tak menumpuk datanya
+
+                  var table = "";
+
+                  table +="<tr><th>ID</td><th>Wilayah</th><th>Lattitude - Longitude</th><th>Lihat Peta</th></tr>";
+                  $.each(JSON.parse(JSON.stringify(result)), function(key, val){
+                     table +="<tr><td>"+ val.id +"</td><td>"+ val.kota +", "+ val.kecamatan +", "+ val.propinsi +"</td><td>"+ val.lat +" - "+ val.lon +"</td><td><a href='https://www.latlong.net/c/?lat="+ val.lat +"&long="+ val.lon +"' target='_blank'>Detil Peta     </a></td></tr>";
+                  });
+                     
+                  $("table").append(table); //masukkan kedalam table  
+
+                  $("#tombol").show();
+                  $("#load").hide();
+                  }
+            });
+         });
+      });
+   </script>
+   <script>      
+      $().ready(function(){
+         $("#load").hide();
+
+         $("#tombol1").click(function(){
+            //ajax
+            $.ajax({
+               dataType: "json",
+               url: "http://jendela.data.kemdikbud.go.id/api/index.php/CcariMuseum/searchGET?nama=museum", 
+               beforeSend: function(){ //proses sebelum ajax berjalan
+                  $("#tombol1").hide();
+                  $("#load").show();
+               },
+               success: function(result){ //berhasil
+                  console.log(result);
+                 //salah
+                  //$("cuaca > tr").remove(); //bersihkan tabel, agar tak menumpuk datanya
+                  
+                  //table itu komponen HTML
+                  $("table > tr").remove(); //bersihkan tabel, agar tak menumpuk datanya
+                  
+                  var cuaca = "";
+
+                  cuaca +="<tr><th>Jam Cuaca</td><th>Kode Cuaca</th><th>Cuaca</th><th>Humidity</th><th>Temperatur C dan F</th></tr>";
+                  $.each(JSON.parse(JSON.stringify(result)), function(key, val){
+                     cuaca +="<tr><td>"+ val.jamCuaca +"</td><td>"+ val.kodeCuaca +"</td><td>"+ val.cuaca +"</td><td>"+ val.humidity +"</td><td>"+ val.tempC +" - "+ val.tempF +"</td></tr>";
+                  });
+                     
+                  $("table").append(cuaca); //masukkan kedalam table  
+
+                  $("#tombol1").show();
+                  $("#load").hide();
+               }
+            });
+         });
+      });
+   </script>
 </body>
 </html>
