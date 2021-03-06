@@ -99,16 +99,16 @@
                success: function(result){ //berhasil
                   console.log(result);
                  //salah
-                  //$("cuaca > tr").remove(); //bersihkan tabel, agar tak menumpuk datanya
+                  //$("museum> tr").remove(); //bersihkan tabel, agar tak menumpuk datanya
                   
                   //table itu komponen HTML
                   $("table > tr").remove(); //bersihkan tabel, agar tak menumpuk datanya
                   
-                  var cuaca = "";
+                  var museum = "";
 
-                  cuaca +="<tr><th>Jam Cuaca</td><th>Kode Cuaca</th><th>Cuaca</th><th>Humidity</th><th>Temperatur C dan F</th></tr>";
+                  museum +="<tr><th>Jam museum</td><th>Kode museum</th><th>museum</th>";
                   $.each(JSON.parse(JSON.stringify(result)), function(key, val){
-                     cuaca +="<tr><td>"+ val.jamCuaca +"</td><td>"+ val.kodeCuaca +"</td><td>"+ val.cuaca +"</td><td>"+ val.humidity +"</td><td>"+ val.tempC +" - "+ val.tempF +"</td></tr>";
+                     cuaca +="<tr><td>"+ val.jamMuseum +"</td><td>"+ val.kodeMuseum +"</td><td>"+ val.museum +"</td></tr>";
                   });
                      
                   $("table").append(cuaca); //masukkan kedalam table  
