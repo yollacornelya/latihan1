@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,23 +26,22 @@
       $().ready(function(){
          $("#load").hide();
 
-         $("#tombol").click(function(){
+         $("#load").click(function(){
             //ajax
             $.ajax({
                dataType: "json",
-               url: "http://jendela.data.kemdikbud.go.id/api/index.php/CcariMuseum/searchGET?nama=museum", 
+               url: "https://datasekolahapi.herokuapp.com/api/data/sd", 
                beforeSend: function(){ //proses sebelum ajax berjalan
                   $("#load").show();
                },
-               success: function(data){ //berhasil
-                  console.log(data);
-                  /*var meal = data.meals;
-                  
+               success: function(result){ //berhasil
+                  console.log(result);
+
+
                   //masukkan kedalam table
-                  var isiTable = "<tr><td>Nama</td><td>"+ meal[0].strMeal +"</td></tr>";
-                     isiTable += "<tr><td>Gambar</td><td><img src='"+ meal[0].strMealThumb +"' loading='lazy' height='200px'></td></tr>";*/
-                     
-                  $("table").append(isiTable);
+
+
+                  $("table").append();
 
                   $("#load").hide();
                }

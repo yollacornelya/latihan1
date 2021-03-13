@@ -1,47 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Data dengan Jquery 01</title>
-
    <!-- harus tehubung dengan internet agar Jquery berfungsi, krn CDN -->
    <script src="https://code.jquery.com/jquery-3.5.1.min.js" 
    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" 
    crossorigin="anonymous"></script>
-
    <style type="text/css">
       input, button{
          padding:10px;
          margin: 5px
       }
+
+      table, th, td {
+         border-collapse: collapse;
+         border: 1px solid black;
+         padding: 5px;
+      }
    </style>
 </head>
 <body>
-   <h1>Data dengan Jquery</h1>
-   <input id="nim" placeholder="NIM"/><br/>
-   <input id="nama" placeholder="Ketik namamu"/><br/>
-   <button id="tombol">Tambah</button>
-
-   <p>Tampung data dibawah ini</p>
-   <button id="hapus">Hapus</button>
-   <p id="hasil"></p>
-
+   <h1>Akses API dengan Jquery ajax</h1>
+   <h1>Akses API dengan Jquery Ajax - Data Wilayah Indonesia</h1>
+   <button id="tombol">Load</button><img id="load" src="load.gif">
+   <table border="1"></table>
+   <table></table>
    <script>      
       $().ready(function(){
+         $("#load").hide();
          $("#tombol").click(function(){
-            //ambil nilai dari inputbox
-            var nim = $("#nim").val();
-            var nama = $("#nama").val();
+            //ajax
+            $.ajax({
+               dataType: "json",
+               url: "https://datasekolahapi.herokuapp.com/api/data/sd", 
+               beforeSend: function(){ //proses sebelum ajax berjalan
+                  $("#tombol").hide();
+                  $("#load").show();
+               },
+               success: function(result){ //berhasil
+                  console.log(result);
 
-            //append = menambahkan
-            $("#hasil").append("<br/>"+ nim +"-"+ nama);
-         });
+                  $("table > tr").remove(); //bersihkan tabel, agar tak menumpuk datanya
 
-         $("#hapus").click(function(){
-            $("#hasil").empty();
+
+                  //masukkan kedalam table
+
+                  var table = "";
+
+                  table +="<tr><th>ID</td><th>Wilayah</th><th>Lattitude - Longitude</th><th>Lihat Peta</th></tr>";
+                  $.each(JSON.parse(JSON.stringify(result)), function(key, val){
+                     table +="<tr><td>"+ val.id +"</td><td>"+ val.kota +", "+ val.kecamatan +", "+ val.propinsi +"</td><td>"+ val.lat +" - "+ val.lon +"</td><td><a href='https://www.latlong.net/c/?lat="+ val.lat +"&long="+ val.lon +"' target='_blank'>Detil Peta     </a></td></tr>";
+                  });
+
+                  $("load").append();
+                  $("table").append(table); //masukkan kedalam table  
+
+                  $("#tombol").show();
+                  $("#load").hide();
+               }
+            });
          });
       });
    </script>
 </body>
 </html>
+</html> 
